@@ -15,6 +15,28 @@ $(document).ready(function () {
             //
         }
     });
+    $(document).on('change', ".add-variants", function () {
+        let variant_id = $(this).find(":selected").val();
+        let index = $(this).attr("id").split('-')[2];
+        $.ajax({
+            url: '/product/variant/tag/' + variant_id,
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).then((response) => {
+            let variant_tags = JSON.parse(response);
+            let option = '';
+            for (let i = 0; i < variant_tags.length; i++) {
+                option += '<option> ' + variant_tags[i]['variant'] + ' </option>';
+            }
+            $('#select2-value-' + index).empty().append(option);
+        }).catch((error) => {
+            console.log(error)
+        })
+    });
 });
 
 function addVariant(event) {
@@ -51,15 +73,15 @@ function updateVariantPreview() {
     $(variantPreviewArray).each(function (index, element) {
         tableBody += `<tr>
                         <th>
-                                        <input type="hidden" name="product_preview[${index}][variant]" value="${element}">
-                                        <span class="font-weight-bold">${element}</span>
-                                    </th>
+                            <input type="hidden" name="product_preview[${index}][variant]" value="${element}">
+                            <span class="font-weight-bold">${element}</span>
+                        </th>
                         <td>
-                                        <input type="text" class="form-control" value="0" name="product_preview[${index}][price]" required>
-                                    </td>
+                            <input type="text" class="form-control" value="0" name="product_preview[${index}][price]" required>
+                        </td>
                         <td>
-                                        <input type="text" class="form-control" value="0" name="product_preview[${index}][stock]">
-                                    </td>
+                            <input type="text" class="form-control" value="0" name="product_preview[${index}][stock]">
+                        </td>
                       </tr>`;
     });
 
@@ -69,35 +91,30 @@ function updateVariantPreview() {
 function addVariantTemplate() {
 
     $("#variant-sections").append(`<div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="">Option</label>
-                                        <select id="select2-option-${currentIndex}" data-index="${currentIndex}" name="product_variant[${currentIndex}][option]" class="form-control custom-select select2 select2-option">
-                                            <option value="1">
-                                                Color
-                                            </option>
-                                            <option value="2">
-                                                Size
-                                            </option>
-                                            <option value="6">
-                                                Style
-                                            </option>
-                                        </select>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Option</label>
+                                            <select id="select2-option-${currentIndex}" data-index="${currentIndex}" name="product_variant[${currentIndex}][option]" class="form-control custom-select select2 select2-option add-variants">
+                                                <option value="0"> Select Varient </option>
+                                                <option value="1"> Color </option>
+                                                <option value="2"> Size </option>
+                                                <option value="6"> Style </option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label class="d-flex justify-content-between">
-                                            <span>Value</span>
-                                            <a href="#" class="remove-btn" data-index="${currentIndex}" onclick="removeVariant(event, this);">Remove</a>
-                                        </label>
-                                        <select id="select2-value-${currentIndex}" data-index="${currentIndex}" name="product_variant[${currentIndex}][value][]" class="select2 select2-value form-control custom-select" multiple="multiple">
-                                        </select>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="d-flex justify-content-between">
+                                                <span>Value</span>
+                                                <a href="#" class="remove-btn" data-index="${currentIndex}" onclick="removeVariant(event, this);">Remove</a>
+                                            </label>
+                                            <select id="select2-value-${currentIndex}" data-index="${currentIndex}" name="product_variant[${currentIndex}][value][]" class="select2 select2-value form-control custom-select varient-tag" multiple="multiple">
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>`);
+                                </div>`);
 
-    $(`#select2-option-${currentIndex}`).select2({placeholder: "Select Option", theme: "bootstrap4"});
+    $(`#select2-option-${currentIndex}`).select2({ placeholder: "Select Option", theme: "bootstrap4" });
 
     $(`#select2-value-${currentIndex}`)
         .select2({

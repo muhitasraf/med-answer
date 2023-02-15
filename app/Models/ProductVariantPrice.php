@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductVariantPrice extends Model
 {
-    public function varients1(){
+    protected $fillable = [
+        'product_variant_one', 'product_variant_two', 'product_variant_three'
+    ];
+    public function varients_one(){
         return $this->belongsTo(ProductVariant::class,'product_variant_one')->where('variant_id',1);
     }
-    public function varients2(){
+    public function varients_two(){
         return $this->belongsTo(ProductVariant::class,'product_variant_two')->where('variant_id',2);
     }
-    public function varients3(){
+    public function varients_three(){
         return $this->belongsTo(ProductVariant::class,'product_variant_three')->where('variant_id',6);
     }
-    // public function varients1(){
-    //     return $this->hasOne(ProductVariant::class,'product_variant_one');
-    // }
 }

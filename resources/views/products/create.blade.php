@@ -5,6 +5,7 @@
         <h1 class="h3 mb-0 text-gray-800">Create Product</h1>
     </div>
     <form action="{{ route('product.store') }}" method="post" autocomplete="off" spellcheck="false">
+        @csrf
         <section>
             <div class="row">
                 <div class="col-md-6">
@@ -17,26 +18,26 @@
                             <div class="form-group">
                                 <label for="product_name">Product Name</label>
                                 <input type="text"
-                                       name="product_name"
-                                       id="product_name"
-                                       required
-                                       placeholder="Product Name"
-                                       class="form-control">
+                                    name="product_name"
+                                    id="product_name"
+                                    required
+                                    placeholder="Product Name"
+                                    class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="product_sku">Product SKU</label>
                                 <input type="text" name="product_sku"
-                                       id="product_sku"
-                                       required
-                                       placeholder="Product Name"
-                                       class="form-control"></div>
+                                    id="product_sku"
+                                    required
+                                    placeholder="Product Name"
+                                    class="form-control"></div>
                             <div class="form-group mb-0">
                                 <label for="product_description">Description</label>
                                 <textarea name="product_description"
-                                          id="product_description"
-                                          required
-                                          rows="4"
-                                          class="form-control"></textarea>
+                                    id="product_description"
+                                    required
+                                    rows="4"
+                                    class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -54,8 +55,8 @@
                 <!--                Variants-->
                 <div class="col-md-6">
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3"><h6
-                                class="m-0 font-weight-bold text-primary">Variants</h6>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Variants</h6>
                         </div>
                         <div class="card-body pb-0" id="variant-sections">
                         </div>
@@ -73,11 +74,11 @@
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <thead>
-                                    <tr class="text-center">
-                                        <th width="33%">Variant</th>
-                                        <th>Price</th>
-                                        <th>Stock</th>
-                                    </tr>
+                                        <tr class="text-center">
+                                            <th width="33%">Variant</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                        </tr>
                                     </thead>
                                     <tbody id="variant-previews">
                                     </tbody>
@@ -87,12 +88,16 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-lg btn-primary">Save</button>
+            <button type="submit" class="btn btn-lg btn-primary">Save</button>
             <button type="button" class="btn btn-secondary btn-lg">Cancel</button>
         </section>
     </form>
 @endsection
-
+<style>
+    .select2-selection__choice{
+        background-color: rgb(41, 248, 179)!important;
+    }
+</style>
 @push('page_js')
     <script type="text/javascript" src="{{ asset('js/product.js') }}"></script>
 @endpush

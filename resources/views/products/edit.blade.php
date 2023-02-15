@@ -4,7 +4,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Edit Product</h1>
     </div>
-    <form action="">
+    <form action="{{ route('product.store') }}" method="post" autocomplete="off" spellcheck="false">
         <section>
             <div class="row">
                 <div class="col-md-6">
@@ -18,6 +18,7 @@
                                 <label for="product_name">Product Name</label>
                                 <input type="text"
                                        name="product_name"
+                                       value="{{$edit_product->title}}"
                                        id="product_name"
                                        required
                                        placeholder="Product Name"
@@ -26,6 +27,7 @@
                             <div class="form-group">
                                 <label for="product_sku">Product SKU</label>
                                 <input type="text" name="product_sku"
+                                       value="{{$edit_product->sku}}"
                                        id="product_sku"
                                        required
                                        placeholder="Product Name"
@@ -36,7 +38,7 @@
                                           id="product_description"
                                           required
                                           rows="4"
-                                          class="form-control"></textarea>
+                                          class="form-control">{{$edit_product->description}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -54,8 +56,8 @@
                 <!--                Variants-->
                 <div class="col-md-6">
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3"><h6
-                                class="m-0 font-weight-bold text-primary">Variants</h6>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Variants</h6>
                         </div>
                         <div class="card-body pb-0" id="variant-sections">
                         </div>

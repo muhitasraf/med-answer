@@ -10,4 +10,8 @@ class Variant extends Model
         'title', 'description'
     ];
 
+    // public function varients(){
+    //     return $this->belongsTo(ProductVariant::class,'product_variant_one')->where('variant_id',1);
+    // }
+
 }
